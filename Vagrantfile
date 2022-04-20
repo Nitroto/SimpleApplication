@@ -14,7 +14,6 @@ Vagrant.configure("2") do |config|
     docker.vm.network "forwarded_port", guest: 5050, host: 5050, auto_correct: true
     docker.vm.synced_folder "./simple-backend", "/vagrant/simple-backend"
     docker.vm.synced_folder "./simple-frontend", "/vagrant/simple-frontend"
-    docker.vm.synced_folder "./config", "/vagrant/config"
     docker.vm.provision "shell", path: "install-docker.sh"
     docker.vm.provision "shell", path: "run-task.sh", privileged: false
     docker.vm.provider "virtualbox" do |vm|

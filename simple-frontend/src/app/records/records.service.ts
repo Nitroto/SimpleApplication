@@ -2,12 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from "../shared/auth.service";
 import { Record } from "./record";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RecordsService {
-  endpoint: string = 'http://localhost:4000/api';
+  endpoint: string = `${environment.apiURL}/api`;
 
   constructor(public authService: AuthService, private http: HttpClient){
   }

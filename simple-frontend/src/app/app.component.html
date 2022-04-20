@@ -20,7 +20,7 @@
     Home
   </button>
   <button mat-button *ngIf="this.authService.isLoggedIn" routerLink="/records">Records</button>
-  <button mat-button *ngIf="!this.authService.isLoggedIn" routerLink="/records">Register</button>
+  <button mat-button *ngIf="!this.authService.isLoggedIn" routerLink="/sign-up">Register</button>
   <button mat-button *ngIf="!this.authService.isLoggedIn" routerLink="/records">Login</button>
   <button (click)="logout()" *ngIf="this.authService.isLoggedIn" mat-flat-button color="error">Logout</button>
 </mat-menu>

@@ -1,8 +1,6 @@
 FROM node:16-alpine as build
 
-RUN apk update
-RUN apk add git
-RUN apk add --no-cache bash
+RUN apk add --no-cache bash git
 WORKDIR /usr/app
 COPY simple-backend /usr/app
 RUN git clone https://github.com/vishnubob/wait-for-it.git

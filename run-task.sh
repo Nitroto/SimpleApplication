@@ -1,5 +1,5 @@
 #!/bin/bash
 
 echo "* Run task ..."
-cp /vagrant/docker-compose.yaml .
+cd /vagrant
 sg docker -c "docker compose up --build -d"

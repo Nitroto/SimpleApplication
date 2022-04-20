@@ -4,7 +4,7 @@ services:
     container_name: simple-backend
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: ./simple-backend/Dockerfile
     depends_on:
       - postgres
     links:
@@ -19,13 +19,13 @@ services:
       DB_HOST: postgres
     ports:
       - 4000:4000
-    command: ["./wait-for-it/wait-for-it.sh", "postgres:5432", "--", "npm", "start"]
+    command: bash -c "./wait-for-it/wait-for-it.sh postgres:5432 -- npm migrate && npm start"
     restart: on-failure
   simple_frontend:
     container_name: simple-frontend
     build:
       context: .
-      dockerfile: Dockerfile.frontend
+      dockerfile: ./simple-frontend/Dockerfile
     depends_on:
       - simple_backend
     environment:
