@@ -1,0 +1,27 @@
+<mat-toolbar color="primary" class="expanded-toolbar">
+  <button mat-button routerLink="/">{{title}}</button>
+
+  <div fxLayout="row" fxShow="false" fxShow.gt-sm>
+    <button mat-button routerLink="/">
+      <mat-icon>home</mat-icon>
+    </button>
+    <button mat-button *ngIf="!this.authService.isLoggedIn" routerLink="/sign-up">Register</button>
+    <button mat-button *ngIf="!this.authService.isLoggedIn" routerLink="/log-in">Login</button>
+    <button mat-button *ngIf="this.authService.isLoggedIn" routerLink="/records">Records</button>
+    <button (click)="logout()" *ngIf="this.authService.isLoggedIn" type="button" mat-flat-button color="error">Logout</button>
+  </div>
+  <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
+    <mat-icon>menu</mat-icon>
+  </button>
+</mat-toolbar>
+<mat-menu x-position="before" #menu="matMenu">
+  <button mat-menu-item routerLink="/">
+    <mat-icon>home</mat-icon>
+    Home
+  </button>
+  <button mat-button *ngIf="this.authService.isLoggedIn" routerLink="/records">Records</button>
+  <button mat-button *ngIf="!this.authService.isLoggedIn" routerLink="/records">Register</button>
+  <button mat-button *ngIf="!this.authService.isLoggedIn" routerLink="/records">Login</button>
+  <button (click)="logout()" *ngIf="this.authService.isLoggedIn" mat-flat-button color="error">Logout</button>
+</mat-menu>
+<router-outlet></router-outlet>
