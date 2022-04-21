@@ -1,7 +1,7 @@
-version: "3"
+version: "3.9"
 services:
-  simple_backend:
-    container_name: simple-backend
+  backend:
+    container_name: backend
     build:
       context: .
       dockerfile: Dockerfile.backend
@@ -10,7 +10,7 @@ services:
     links:
       - postgres
     environment:
-      DATABASE_URL: postgres://postgres:postgres@lypTFy3pNR:5432/simple_db
+      DATABASE_URL: postgres://postgres:lypTFy3pNR@postgres:5432/simple_db
       NODE_ENV: production
       PORT: 4000
       TOKEN_SECRET: DzPNsBoaL1EKhngLdweTC1k2IYxBqnWX
@@ -18,29 +18,28 @@ services:
       BCRYPT_PASSWORD: mdn6mmKISFhoGhi5tmZUUv9onbtryTKr
       DB_HOST: postgres
     ports:
-      - 4000:4000
-    command: bash -c "./wait-for-it/wait-for-it.sh postgres:5432 -- npm migrate && npm start"
+      - "4000:4000"
+    command: bash -c "./wait-for-it/wait-for-it.sh postgres:5432 -- npm run migrate up && npm start"
     restart: on-failure
-  simple_frontend:
-    container_name: simple-frontend
+    networks:
+      - app-network
+  frontend:
+    container_name: frontend
     build:
       context: .
       dockerfile: Dockerfile.frontend
     depends_on:
-      - simple_backend
-    environment:
-      API_URL: localhost
-      API_PORT: 4000
+      - backend
     ports:
-      - 80:80
+      - "80:80"
     networks:
-    - simple-network
+      - app-network
   postgres:
     container_name: postgres
     image: postgres:14.2-alpine
     ports:
-      - 5432:5432
-    volumes: 
+      - "5432:5432"
+    volumes:
       - ./pg_data:/var/lib/postgresql/data
       - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
     restart: always
@@ -50,7 +49,7 @@ services:
       POSTGRES_DB: simple_db
       PGDATA: pg_data
     networks:
-    - simple-network
+      - app-network
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:6.8
@@ -60,15 +59,15 @@ services:
       PGADMIN_DEFAULT_PASSWORD: secret
       PGADMIN_LISTEN_PORT: 5050
     ports:
-      - 5050:5050
+      - "5050:5050"
     volumes:
       - pgadmin-data:/var/lib/pgadmin
     depends_on:
       - postgres
     networks:
-    - simple-network
+      - app-network
 volumes:
-    pg_data:
-    pgadmin-data:
+  pg_data:
+  pgadmin-data:
 networks:
-    simple-network:
+  app-network:
