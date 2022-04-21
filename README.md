@@ -2,7 +2,7 @@
 - Node.js 16 Typescript and Express for back-end
 - Angular 13 for front-end
 
-## Run in Vagrant virtual enviroment with virtualbox provider
+## Run in Vagrant virtual environment with virtualbox provider
 `$ vagrant up`  
 
 
