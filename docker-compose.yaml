@@ -4,7 +4,7 @@ services:
     container_name: simple-backend
     build:
       context: .
-      dockerfile: ./simple-backend/Dockerfile
+      dockerfile: Dockerfile.backend
     depends_on:
       - postgres
     links:
@@ -25,7 +25,7 @@ services:
     container_name: simple-frontend
     build:
       context: .
-      dockerfile: ./simple-frontend/Dockerfile
+      dockerfile: Dockerfile.frontend
     depends_on:
       - simple_backend
     environment:
